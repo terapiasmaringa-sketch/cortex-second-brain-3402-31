@@ -85,59 +85,6 @@ export const Navbar = () => {
 
   return (
     <>
-      <TooltipProvider>
-        <header className="glass-panel fixed top-6 left-1/2 transform -translate-x-1/2 z-40 rounded-lg px-1 py-1">
-          <nav className="flex items-center">
-            
-            {/* Other nav items */}
-            {navItems.map((item) => (
-              <NavItem
-                key={item.id}
-                to={item.to}
-                icon={item.icon}
-                label={item.label}
-                active={active === item.id}
-                onClick={() => handleNavItemClick(item.id)}
-              />
-            ))}
-            
-            {isAuthenticated ? (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center gap-2 px-4 py-3 rounded-lg hover:bg-primary hover:text-primary-foreground"
-                    onClick={logout}
-                  >
-                    <LogOut size={20} />
-                    {active === 'logout' && <span className="font-medium">Logout</span>}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Logout</p>
-                </TooltipContent>
-              </Tooltip>
-            ) : (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center gap-2 px-4 py-3 rounded-lg hover:bg-primary hover:text-primary-foreground"
-                    onClick={handleOpenAuthModal}
-                  >
-                    <LogIn size={20} />
-                    {active === 'login' && <span className="font-medium">Login</span>}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Login</p>
-                </TooltipContent>
-              </Tooltip>
-            )}
-          </nav>
-        </header>
-      </TooltipProvider>
-      
       <AuthModal isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />
     </>
   );
