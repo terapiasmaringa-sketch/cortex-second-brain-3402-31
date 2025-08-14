@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { LogIn, Search, Upload, User, Settings, LogOut, Table, Info, HelpCircle, Code } from 'lucide-react';
+import { LogIn, Search, Upload, User, Settings, LogOut, Table } from 'lucide-react';
 import { useRippleEffect } from '@/lib/animations';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
-import { useTheme } from '@/contexts/ThemeContext';
 import AuthModal from '@/components/AuthModal';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
@@ -57,7 +56,7 @@ const NavItem = ({ to, icon, label, active, onClick }: NavItemProps) => {
 
 
 export const Navbar = () => {
-  const [active, setActive] = useState('what');
+  const [active, setActive] = useState('');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { isAuthenticated, logout } = useAuth();
   
