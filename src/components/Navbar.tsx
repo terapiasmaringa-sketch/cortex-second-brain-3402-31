@@ -26,7 +26,7 @@ const NavItem = ({ to, icon, label, active, onClick }: NavItemProps) => {
         <Link 
           to={to} 
           className={cn(
-            "relative flex items-center justify-center px-4 py-3 rounded-lg transition-all duration-300",
+            "relative flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300",
             "hover:bg-primary/10 hover:text-primary",
             "overflow-hidden",
             active ? "bg-primary/10 text-primary" : "text-foreground/80"
@@ -42,9 +42,7 @@ const NavItem = ({ to, icon, label, active, onClick }: NavItemProps) => {
           )}>
             {icon}
           </span>
-          {active && (
-            <span className="ml-2 font-medium">{label}</span>
-          )}
+          <span className="font-medium">{label}</span>
         </Link>
       </TooltipTrigger>
       <TooltipContent>
@@ -85,6 +83,71 @@ export const Navbar = () => {
 
   return (
     <>
+      {/* Desktop Navigation - Fixed Header */}
+      <TooltipProvider>
+        <header className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              {/* Logo/Brand */}
+              <div className="flex-shrink-0">
+                <Link to="/" className="text-xl font-bold text-foreground">
+                  Brand
+                </Link>
+              </div>
+
+              {/* Navigation Items */}
+              <nav className="flex items-center space-x-1">
+                {navItems.map((item) => (
+                  <NavItem
+                    key={item.id}
+                    to={item.to}
+                    icon={item.icon}
+                    label={item.label}
+                    active={active === item.id}
+                    onClick={() => handleNavItemClick(item.id)}
+                  />
+                ))}
+                
+                {/* Auth Button */}
+                {isAuthenticated ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-primary hover:text-primary-foreground"
+                        onClick={logout}
+                      >
+                        <LogOut size={20} />
+                        <span className="font-medium">Logout</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Logout</p>
+                    </TooltipContent>
+                  </Tooltip>
+                ) : (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-primary hover:text-primary-foreground"
+                        onClick={handleOpenAuthModal}
+                      >
+                        <LogIn size={20} />
+                        <span className="font-medium">Login</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Login</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+              </nav>
+            </div>
+          </div>
+        </header>
+      </TooltipProvider>
+      
       <AuthModal isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />
     </>
   );
